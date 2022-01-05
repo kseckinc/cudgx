@@ -1,10 +1,10 @@
 package gateway
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/mod"
 	wrapmod "github.com/galaxy-future/cudgx/internal/gateway/mod"
-	"fmt"
 	"strings"
 )
 

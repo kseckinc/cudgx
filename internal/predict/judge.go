@@ -1,13 +1,13 @@
 package predict
 
 import (
+	"context"
 	"github.com/galaxy-future/cudgx/common/types"
 	"github.com/galaxy-future/cudgx/internal/clients"
 	"github.com/galaxy-future/cudgx/internal/predict/config"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	redundancy_keeper "github.com/galaxy-future/cudgx/internal/predict/redundancy-keeper"
 	"github.com/galaxy-future/cudgx/internal/predict/xclient"
-	"context"
 	"time"
 )
 

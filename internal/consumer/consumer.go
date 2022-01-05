@@ -1,13 +1,13 @@
 package consumer
 
 import (
+	"context"
+	"database/sql"
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/common/mod"
-	"context"
-	"database/sql"
-	"fmt"
 	"github.com/golang/protobuf/proto"
 	clickhouseGo "github.com/mailru/go-clickhouse"
 	"go.uber.org/zap"

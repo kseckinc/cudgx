@@ -1,14 +1,14 @@
 package redundancy_keeper
 
 import (
+	"context"
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/internal/predict/config"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"github.com/galaxy-future/cudgx/internal/predict/model"
 	"github.com/galaxy-future/cudgx/internal/predict/service"
 	"github.com/galaxy-future/cudgx/internal/predict/xclient"
-	"context"
-	"fmt"
 	"go.uber.org/zap"
 	"math"
 	"sort"

@@ -1,10 +1,10 @@
 package config
 
 import (
-	"github.com/galaxy-future/cudgx/common/clickhouse"
-	"github.com/galaxy-future/cudgx/common/types"
 	"encoding/json"
 	"fmt"
+	"github.com/galaxy-future/cudgx/common/clickhouse"
+	"github.com/galaxy-future/cudgx/common/types"
 	"io/ioutil"
 	"os"
 )

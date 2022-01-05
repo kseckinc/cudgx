@@ -2,9 +2,9 @@ package xclient
 
 import (
 	"bytes"
-	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"encoding/json"
 	"fmt"
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"io/ioutil"
 	"net/http"
 	"time"

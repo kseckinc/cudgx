@@ -1,10 +1,10 @@
 package gateway_test
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/types"
 	"github.com/galaxy-future/cudgx/internal/gateway"
-	"fmt"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 	"reflect"

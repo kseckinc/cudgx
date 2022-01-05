@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/galaxy-future/cudgx/common/logger"
 	"context"
 	"flag"
 	"fmt"
+	"github.com/galaxy-future/cudgx/common/logger"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"math"

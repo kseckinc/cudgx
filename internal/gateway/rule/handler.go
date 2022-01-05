@@ -1,10 +1,10 @@
 package rule
 
 import (
-	"github.com/galaxy-future/cudgx/common/mod"
-	wrapmod "github.com/galaxy-future/cudgx/internal/gateway/mod"
 	"encoding/json"
 	"fmt"
+	"github.com/galaxy-future/cudgx/common/mod"
+	wrapmod "github.com/galaxy-future/cudgx/internal/gateway/mod"
 	"strings"
 )
 

@@ -1,9 +1,9 @@
 package query
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/internal/clients"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
-	"fmt"
 )
 
 //InstanceCount 查询服务节点数量

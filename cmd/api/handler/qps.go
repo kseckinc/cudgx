@@ -1,9 +1,9 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/internal/predict/service"
 	"github.com/galaxy-future/cudgx/internal/response"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 	"net/http"

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/galaxy-future/cudgx/common/logger"
-	"github.com/galaxy-future/cudgx/internal/consumer"
 	"context"
 	"flag"
+	"github.com/galaxy-future/cudgx/common/logger"
+	"github.com/galaxy-future/cudgx/internal/consumer"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"os"

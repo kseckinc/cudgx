@@ -1,9 +1,9 @@
 package clients
 
 import (
-	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"database/sql"
 	"fmt"
+	"github.com/galaxy-future/cudgx/common/clickhouse"
 )
 
 var (

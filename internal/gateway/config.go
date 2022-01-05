@@ -1,9 +1,9 @@
 package gateway
 
 import (
+	"encoding/json"
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/internal/gateway/rule"
-	"encoding/json"
 	"io/ioutil"
 	"os"
 	"strings"

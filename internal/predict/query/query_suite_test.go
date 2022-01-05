@@ -1,9 +1,9 @@
 package query_test
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"github.com/galaxy-future/cudgx/internal/clients"
-	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"os"

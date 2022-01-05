@@ -1,10 +1,10 @@
 package xclient
 
 import (
-	"github.com/galaxy-future/cudgx/common/logger"
-	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"encoding/json"
 	"fmt"
+	"github.com/galaxy-future/cudgx/common/logger"
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"

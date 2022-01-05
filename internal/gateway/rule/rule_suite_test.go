@@ -1,8 +1,8 @@
 package rule_test
 
 import (
-	"github.com/galaxy-future/cudgx/internal/gateway/rule"
 	"fmt"
+	"github.com/galaxy-future/cudgx/internal/gateway/rule"
 	"os"
 	"os/exec"
 	"testing"

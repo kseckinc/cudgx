@@ -1,10 +1,10 @@
 package query
 
 import (
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/internal/clients"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
-	"fmt"
 	"go.uber.org/zap"
 )
 

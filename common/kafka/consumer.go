@@ -1,10 +1,10 @@
 package kafka
 
 import (
-	"github.com/galaxy-future/cudgx/common/logger"
 	"context"
 	"fmt"
 	"github.com/Shopify/sarama"
+	"github.com/galaxy-future/cudgx/common/logger"
 	"go.uber.org/zap"
 	"log"
 )

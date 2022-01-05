@@ -1,12 +1,12 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/galaxy-future/cudgx/common/logger"
 	metricGo "github.com/galaxy-future/metrics-go"
 	"github.com/galaxy-future/metrics-go/aggregate"
 	"github.com/galaxy-future/metrics-go/types"
-	"flag"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"math"
