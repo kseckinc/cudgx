@@ -1,0 +1,19 @@
+package query
+
+import (
+	"github.com/galaxy-future/cudgx/internal/clients"
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
+	"fmt"
+)
+
+//InstanceCount 查询服务节点数量
+func InstanceCount(serviceName, clusterName string, begin, end int64) (samples []ClusterSample, err error) {
+	client := clients.ClickhouseRdCli
+	sqlContent := fmt.Sprintf(`select timestamp ,clusterName , count( distinct(serviceHost)) 
+			from %s.%s 
+			where timestamp >= %d and  timestamp < %d and metricName = '%s'  and serviceName = '%s' and clusterName = '%s'
+			group by timestamp , serviceName, clusterName, metricName
+			order by timestamp `, client.Database, client.Table, begin, end, consts.QPSMetricsName, serviceName, clusterName)
+
+	return queryClusterSamples(sqlContent)
+}

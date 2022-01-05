@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-pi
+  labels:
+    app: sample-pi
+  namespace: cudgx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-pi
+  template:
+    metadata:
+      labels:
+        app: sample-pi
+    spec:
+      containers:
+        - name: pi
+          image: 172.16.16.172:12380/cudgx/sample-pi:v0.3
+          imagePullPolicy: Always
+          env:
+            - name: CUDGX_SERVICE_NAME
+              value: gf.cudgx.sample.pi
+          ports:
+            - containerPort: 8090
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-pi
+  namespace: cudgx
+spec:
+  selector:
+    app: sample-pi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8090

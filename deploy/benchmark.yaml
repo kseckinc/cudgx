@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-benchmark
+  labels:
+    app: sample-benchmark
+  namespace: cudgx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-benchmark
+  template:
+    metadata:
+      labels:
+        app: sample-benchmark
+    spec:
+      containers:
+        - name: benchmark
+          image: 172.16.16.172:12380/cudgx/sample-benchmark:v0.3
+          args: ["--gf.cudgx.sample.benchmark.sever-address=http://sample-pi.cudgx.svc/pi"]
+          imagePullPolicy: Always
+

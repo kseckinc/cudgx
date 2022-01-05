@@ -1,0 +1,1 @@
+drop database consumer_test;

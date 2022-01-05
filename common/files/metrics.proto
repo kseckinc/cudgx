@@ -1,0 +1,36 @@
+syntax = "proto3";
+package mod;
+
+option go_package = "./mod";
+
+message MetricsMessage {
+  //服务相关的字段
+  string serviceName = 1;
+  string serviceHost = 2;
+  string serviceRegion = 3;
+  string serviceAz = 4;
+  string clusterName = 5;
+
+  //Series相关的字段
+  string metricName = 10 ;
+  map<string,string> labels = 11;
+
+  //时间字段，毫秒级别
+  int64 timestamp = 20;
+
+  //聚合结果字段
+  double value = 30;
+
+}
+
+
+message MetricBatch {
+  //服务名称和指标名称用于路由
+  string serviceName = 1 ;
+  string metricName = 2 ;
+
+  //数据用于传输
+  repeated  MetricsMessage messages = 10;
+}
+
+

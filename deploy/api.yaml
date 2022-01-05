@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cudgx-api-config
+data:
+  api.json: '
+  {
+  "clickhouse": {
+    "schema": "http",
+    "user": "writer",
+    "password": "1fafbdc341a747dd92e86dec13a37735",
+    "hosts": [
+      "172.16.16.180:8123",
+      "172.16.16.181:8123",
+      "172.16.16.182:8123"
+    ],
+    "write_timeout": "60s",
+    "database": "metrics",
+    "table": "metrics_gf_test"
+  },
+  "param": {
+    "samples_query_count": 60,
+    "predict_minimal_count": 50,
+    "minimal_skip_factor": 0.1,
+    "maximal_skip_factor": 0.1
+  },
+  "database": {
+    "dsn": "root:db@galaxy-future.com@tcp(172.16.16.169:3306)/cudgx?charset=utf8mb4&parseTime=True&loc=Local"
+  },
+  "xclient": {
+    "bridgx_server_address": "http://bridgx-api.internal.galaxy-future.org",
+    "schedulx_server_address": "http://10.16.23.96:9090"
+  }
+}
+  '
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cudgx-api
+  labels:
+    app: cudgx-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cudgx-api
+  template:
+    metadata:
+      labels:
+        app: cudgx-api
+    spec:
+      containers:
+        - name: api
+          image: 172.16.16.172:12380/cudgx/api:v0.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 19003
+          env:
+            - name: GIN_MODE
+              value: release
+          volumeMounts:
+            - name: configure
+              mountPath: /home/cudgx/conf
+
+      volumes:
+        - name: configure
+          configMap:
+            name: cudgx-api-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cudgx-api
+spec:
+  selector:
+    app: cudgx-api
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 19003

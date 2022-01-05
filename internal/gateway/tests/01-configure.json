@@ -1,0 +1,51 @@
+{
+  "monitoring_route": {
+    "default": {
+      "brokers": ["monitoring-default:9092"],
+      "topic": "monitoring_default_test"
+    },
+    "entries": [
+      {
+        "service_prefix": "monitoring-gf",
+        "brokers": ["monitoring-gf:9092"],
+        "topic": "monitoring_gf_test"
+      }
+    ]
+  },
+  "streaming_route": {
+    "default": {
+      "brokers": ["streaming-default:9092"],
+      "topic": "streaming_default_test"
+    },
+    "entries": [
+      {
+        "service_prefix": "streaming-gf",
+        "brokers": ["streaming-gf:9092"],
+        "topic": "streaming_gf_test"
+      }
+    ]
+  },
+
+  "producer": {
+    "MaxMessageBytes": 123456,
+    "RequiredAcks": "WaitForLocal",
+    "Timeout": "10s",
+    "Compression": "none",
+    "CompressionLevel": -1000,
+    "Return": {
+      "Successes": false,
+      "Errors": true
+    },
+    "Flush": {
+      "Bytes": 2089,
+      "Messages": 100,
+      "Frequency": "4s",
+      "MaxMessages": 2000
+    },
+    "Retry": {
+      "Max": 100,
+      "Backoff": "600ms"
+    }
+  }
+
+}

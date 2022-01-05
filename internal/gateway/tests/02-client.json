@@ -1,0 +1,55 @@
+{
+  "monitoring_route": {
+    "default": {
+      "brokers": ["172.16.16.180:9092"],
+      "topic": "monitoring_metrics_test"
+    },
+    "entries": [
+      {
+        "service_prefix": "gf",
+        "brokers": ["172.16.16.180:9092"],
+        "topic": "monitoring_metrics_gf_test"
+      }
+    ]
+  },
+  "streaming_route": {
+    "default": {
+      "brokers": ["172.16.16.180:9092"],
+      "topic": "streaming_metrics_test"
+    },
+    "entries": [
+      {
+        "service_prefix": "gf",
+        "brokers": ["172.16.16.180:9092"],
+        "topic": "streaming_metrics_gf_test"
+      }
+    ]
+  },
+
+  "producer": {
+    "MaxMessageBytes": 1000000,
+    "RequiredAcks": "WaitForLocal",
+    "Timeout": "10s",
+    "Compression": "none",
+    "CompressionLevel": -1000,
+    "Return": {
+      "Successes": false,
+      "Errors": true
+    },
+    "Flush": {
+      "Bytes": 1024,
+      "Messages": 0,
+      "Frequency": "1s",
+      "MaxMessages": 0
+    },
+    "Retry": {
+      "Max": 3,
+      "Backoff": "100ms"
+    }
+  },
+  "database": {
+    "dsn": "root:@tcp(localhost:3306)/gateway_test?charset=utf8mb4&parseTime=True&loc=Local",
+    "refresh_seconds": 5
+  }
+
+}

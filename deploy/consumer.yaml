@@ -1,0 +1,103 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gf-consumer-config
+  namespace: cudgx
+data:
+  consumer.json: '
+  {
+  "kafka": {
+    "brokers": ["172.16.16.180:9092"],
+    "group": "consumer_v1",
+    "topic": "monitoring_metrics_gf",
+    "consumer":  {
+      "KafkaVersion": "2.0.0",
+      "group": {
+        "session": {
+          "timeout": "10s"
+        },
+        "heartbeat": {
+          "interval": "1s"
+        },
+        "rebalance": {
+          "strategy": "Range",
+          "timeout": "10s",
+          "retry": {
+            "max": 4,
+            "backoff": "100ms"
+          }
+        }
+      },
+      "retry":{
+        "backoff": "2s"
+      },
+      "fetch": {
+        "min": 1,
+        "default": 1000000,
+        "max": 0
+      },
+      "MaxWaitTime": "250ms",
+      "MaxProcessingTime": "100ms",
+      "return": {
+        "errors": false
+      },
+      "offsets": {
+        "CommitInterval": "1s",
+        "initial": "newest",
+        "retention": "0s",
+        "retry": {
+          "max": 3
+        }
+      }
+    }
+  },
+  "clickhouse": {
+    "schema": "http",
+    "user": "writer",
+    "password": "1fafbdc341a747dd92e86dec13a37735",
+    "hosts": ["172.16.16.180:8123","172.16.16.181:8123","172.16.16.182:8123"],
+    "write_timeout": "60s",
+    "database": "metrics",
+    "table": "metrics_gf_test_local"
+  },
+  "write_config": {
+    "flush_duration": "1s",
+    "backoff": "100ms",
+    "retry_count": 3,
+    "batch_size": 100000,
+    "concurrency": 3
+  }
+}
+  '
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gf-consumer
+  labels:
+    app: gf-consumer
+  namespace: cudgx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cudgx-consumer
+  template:
+    metadata:
+      labels:
+        app: cudgx-consumer
+    spec:
+      containers:
+        - name: consumer
+          image: 172.16.16.172:12380/cudgx/consumer:v0.3
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: configure
+              mountPath: /home/cudgx/conf
+      volumes:
+        - name: configure
+          configMap:
+            name: gf-consumer-config
+

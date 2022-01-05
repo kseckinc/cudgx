@@ -1,0 +1,62 @@
+syntax = "proto3";
+package mod;
+
+option go_package = "./mod";
+
+message StreamingRuleMessage {
+  //服务相关的字段
+  string serviceName = 1;
+  string serviceHost = 2;
+  string serviceRegion = 3;
+  string serviceAz = 4;
+  string clusterName = 5;
+
+  //Series相关的字段
+  string metricName = 10 ;
+  map<string,string> labels = 11;
+
+  //时间字段，毫秒级别
+  int64 timestamp = 20;
+
+  //聚合结果字段
+  repeated double values = 40;
+
+  //规则相关字段
+  Rule rule = 50;
+
+}
+
+
+message StreamingRuleBatch {
+  //服务名称和指标名称用于路由
+  string serviceName = 1 ;
+  string metricName = 2 ;
+
+  //数据用于传输
+  repeated  StreamingRuleMessage messages = 10;
+}
+
+message Rule {
+    double benchmark = 1;
+    repeated Filter filters = 2;
+    repeated string groups = 3;
+    Aggregate aggregate = 4;
+}
+
+message Filter {
+    string key = 1;
+    string value = 2;
+    string action = 3;
+}
+
+message Aggregate {
+    string operation = 1;
+    string param = 2;
+}
+
+enum FilterAction {
+    equals = 0;
+    notEquals = 1;
+    like = 2;
+    notLike = 3;
+}

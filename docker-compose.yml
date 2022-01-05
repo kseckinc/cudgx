@@ -1,0 +1,117 @@
+version: '3'
+
+networks:
+  bridgx_net:
+
+services:
+  #######################  mariadb  ########################
+  cudgx-mysql:
+    container_name: mariadb-server
+    image: yobasystems/alpine-mariadb:10.5.11
+    network_mode: "host"
+    environment:
+      MYSQL_ROOT_PASSWORD: mtQ8chN2
+      MYSQL_DATABASE: cudgx
+      MYSQL_USER: gf
+      MYSQL_PASSWORD: db@galaxy-future.com
+    ports:
+      - 3336:3306
+    volumes:
+      - ./init/mysql:/docker-entrypoint-initdb.d/
+    restart: always
+  #######################  kafka  ########################
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:6.2.0
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  #######################  clickhouse  ########################
+  clickhouse-server:
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+      - "9009:9009"
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 262144
+        hard: 262144
+#  clickhouse-client:
+#    image: yandex/clickhouse-client
+#    command: [ '--host', 'server' ]
+
+  #######################  cudgx 1.0  ########################
+  api:
+    container_name: gf-cudgx-api
+    image: cudgx_api:latest
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./docker/api.Dockerfile
+    depends_on:
+      - cudgx-mysql
+      - broker
+      - clickhouse-server
+
+  gateway:
+    container_name: gf-cudgx-gateway
+    image: cudgx_gateway:latest
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./docker/gateway.Dockerfile
+    depends_on:
+      - api
+
+  consumer:
+    container_name: gf-cudgx-consumer
+    image: cudgx_consumer:latest
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./docker/consumer.Dockerfile
+    depends_on:
+      - gateway
+
+  sample-pi:
+    container_name: gf-cudgx-sample-pi
+    image: cudgx_pi:latest
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./docker/pi.Dockerfile
+    depends_on:
+      - api
+      - gateway
+      - consumer
+
+  sample-benchmark:
+    container_name: gf-cudgx-sample-benchmark
+    image: cudgx_benchmark:latest
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./docker/benchmark.Dockerfile
+    depends_on:
+      - api
+      - gateway
+      - consumer
