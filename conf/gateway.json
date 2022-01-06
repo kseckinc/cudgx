@@ -1,26 +1,26 @@
 {
   "monitoring_route": {
     "default": {
-      "brokers": ["172.16.16.180:9092"],
+      "brokers": ["127.0.0.1:9092"],
       "topic": "monitoring_metrics_test"
     },
     "entries": [
       {
         "service_prefix": "gf",
-        "brokers": ["172.16.16.180:9092"],
+        "brokers": ["127.0.0.1:9092"],
         "topic": "monitoring_metrics_gf_test"
       }
     ]
   },
   "streaming_route": {
     "default": {
-      "brokers": ["172.16.16.180:9092"],
+      "brokers": ["127.0.0.1:9092"],
       "topic": "streaming_metrics_test"
     },
     "entries": [
       {
         "service_prefix": "gf",
-        "brokers": ["172.16.16.180:9092"],
+        "brokers": ["127.0.0.1:9092"],
         "topic": "streaming_metrics_gf_test"
       }
     ]
@@ -48,7 +48,7 @@
     }
   },
   "database": {
-    "dsn": "root:db@galaxy-future.com@tcp(172.16.16.169:3306)/cudgx?charset=utf8mb4&parseTime=True&loc=Local",
+    "dsn": "root:db@galaxy-future.com@tcp(127.0.0.1:3336)/cudgx?charset=utf8mb4&parseTime=True&loc=Local",
     "refresh_seconds": 5
   }
 

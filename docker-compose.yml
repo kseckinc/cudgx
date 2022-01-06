@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  bridgx_net:
+  cudgx_net:
 
 services:
   #######################  mariadb  ########################
@@ -94,7 +94,7 @@ services:
 
   sample-pi:
     container_name: gf-cudgx-sample-pi
-    image: cudgx_pi:latest
+    image: cudgx_sample_pi:latest
     network_mode: "host"
     build:
       context: .
@@ -106,7 +106,7 @@ services:
 
   sample-benchmark:
     container_name: gf-cudgx-sample-benchmark
-    image: cudgx_benchmark:latest
+    image: cudgx_sample_benchmark:latest
     network_mode: "host"
     build:
       context: .

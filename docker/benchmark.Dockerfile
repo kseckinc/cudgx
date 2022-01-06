@@ -15,4 +15,4 @@ COPY bin/$app $dir/bin/$app
 WORKDIR $dir
 
 ENTRYPOINT ["./bin/gf.cudgx.sample.benchmark"]
-CMD ["--gf.cudgx.sample.benchmark.sever-address=http://localhost:19100","--gf.cudgx.sample.benchmark.concurrency=1"]
+CMD ["--gf.cudgx.sample.benchmark.sever-address=http://localhost:8090","--gf.cudgx.sample.benchmark.concurrency=1"]

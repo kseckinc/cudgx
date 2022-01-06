@@ -15,11 +15,11 @@ RUN mkdir -p $dir/conf
 COPY bin/$app $dir/bin/$app
 COPY conf/$conf $dir/conf/$conf
 
-EXPOSE 19000
+EXPOSE 19003
 
 WORKDIR $dir
 
 ENV GIN_MODE=release
 
 ENTRYPOINT ["./bin/gf.cudgx.gateway"]
-CMD ["--gf.cudgx.gateway.config=conf/gateway.json","--gf.cudgx.gateway.bind=0.0.0.0:19000"]
+CMD ["--gf.cudgx.gateway.config=conf/gateway.json","--gf.cudgx.gateway.bind=0.0.0.0:19003"]

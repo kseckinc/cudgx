@@ -10,7 +10,7 @@ default: all buildsucc
 buildsucc:
 	@echo Build Cudgx successfully!
 
-all: dev gateway consumer pi benchmark
+all: dev api gateway consumer pi benchmark
 
 dev: check
 	@>&2 echo "Great, all tests passed."
