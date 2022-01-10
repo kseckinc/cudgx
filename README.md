@@ -1,30 +1,43 @@
-## Cudgx
+![画板备份 9](https://user-images.githubusercontent.com/94337797/148376608-8cc8efe6-dd60-44db-9eb3-e7e93dc329c3.png)
+-------
 
-`cudgx-api` 是cudgx api模块，维护自动扩缩容规则。其中predict模块可以根据扩缩容规则和打点数据计算冗余度，配合bridgx&schedulx，实现自动扩缩容。
-
-`cudgx-gateway` 是cudgx gateway模块，负责收集`metrics-go`上报的打点数据，并将数据分发到Kafka。
-
-`cudgx-consumer` 是cudgx consumer模块，负责消费kafka数据，存储至clickhouse。
-
-## Cudgx-sample
-
-`cudgx-sample-pi` 是cudgx提供的sample应用，代码层面已经嵌入了Cudgx SDK `metrics-go`，定时向gateway上报打点数据。
-
-`cudgx-sample-benchmark` 是cudgx提供的benchmark工具，配合pi应用，实现打点信息上报。
+[![Go Report Card](https://goreportcard.com/badge/github.com/galaxy-future/cudgx)](https://goreportcard.com/report/github.com/galaxy-future/cudgx)
 
 
-### 数据流程
+简介
+--------
 
-指标数据流程为： 
-1. cudgx-sample-pi 调用打点SDK `metrics-go`，SDK会将用户的打点数据按照指定时间周期聚合（默认是1s）。
-2. cudgx-sample-benchmark 调用pi程序模拟流量。
-3. metrics-go 每个聚合周期会将指标推送到cudgx-gateway。
-4. cudgx-gateway 将数据分发到Kafka。
-5. cudgx-consumer 消费数据，存储到Clickhouse。
-6. cudgx-gateway 基于Clickhouse查询指标，计算冗余度，配合bridgx&schedulx实现自动扩缩容。
+CudgX是星汉未来推出的面向云原生时代的AIOps智能运维引擎，它通过各类服务的多维度、大数据量的数据收集及机器学习训练分析，对各种服务进行指标化、数字化度量，并基于部署的训练模型，对服务质量进行实时度量从而实现对算力、存储、网络等基础资源的自动化、智能化实时动态调度。
 
-**cudgx架构说明**
+主要特性:<br>
+1、支持服务日志记录和聚合计算；<br>
+2、支持自动化压测；<br>
+3、支持实时容量评估；<br>
+4、支持自动化、智能化的算力弹性调度；<br>
+5、提供mesh agent SDK代理接入；<br>
+6、支持Web服务指标的自动化测量，以及自动扩缩容；<br>
+7、开放的指标定义平台，合作伙伴可以基于开放平台进行个性化指标配置；<br>
 
 
-![cudgx](./images/cudgx.jpg)
+联系我们
+----
+[微博](https://weibo.com/galaxyfuture) | [知乎](https://www.zhihu.com/org/xing-yi-wei-lai) | [B站](https://space.bilibili.com/2057006251)
+| [微信公众号](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat_official_account.md)
+| [企业微信交流群](https://github.com/galaxy-future/comandx/blob/main/docs/resource/wechat.md)
+
+
+
+
+
+
+
+
+行为准则
+------
+[贡献者公约](https://github.com/galaxy-future/cudgx/blob/master/CODE_OF_CONDUCT.md)
+
+授权
+-----
+
+CudgX使用[Elastic License 2.0](https://github.com/galaxy-future/cudgx/blob/master/LICENSE)授权协议进行授权
 
