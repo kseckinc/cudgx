@@ -1,14 +1,14 @@
 {
   "clickhouse": {
     "schema": "http",
-    "user": "writer",
-    "password": "1fafbdc341a747dd92e86dec13a37735",
+    "user": "",
+    "password": "",
     "hosts": [
       "127.0.0.1:8123"
     ],
     "write_timeout": "60s",
-    "database": "metrics",
-    "table": "metrics_gf_test"
+    "database": "cudgx",
+    "table": "metrics_test"
   },
   "param": {
     "samples_query_count": 60,
@@ -17,7 +17,7 @@
     "maximal_skip_factor": 0.1
   },
   "database": {
-    "dsn": "root:db@galaxy-future.com@tcp(127.0.0.1:3336)/cudgx?charset=utf8mb4&parseTime=True&loc=Local"
+    "dsn": "gf:db@galaxy-future.com@tcp(127.0.0.1:3336)/cudgx?charset=utf8mb4&parseTime=True&loc=Local"
   },
   "xclient": {
     "bridgx_server_address": "http://127.0.0.1:9090",

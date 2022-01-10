@@ -1,3 +1,5 @@
+use cudgx;
+
 DROP TABLE IF EXISTS `predict_rules`;
 CREATE TABLE `predict_rules`
 (

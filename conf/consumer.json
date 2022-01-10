@@ -2,7 +2,7 @@
   "kafka": {
     "brokers": ["127.0.0.1:9092"],
     "group": "consumer-test",
-    "topic": "monitoring_metrics_gf_test",
+    "topic": "monitoring_metrics_test",
     "consumer":  {
       "KafkaVersion": "2.0.0",
       "group": {
@@ -46,12 +46,12 @@
   },
   "clickhouse": {
     "schema": "http",
-    "user": "writer",
-    "password": "1fafbdc341a747dd92e86dec13a37735",
+    "user": "",
+    "password": "",
     "hosts": ["127.0.0.1:8123"],
     "write_timeout": "60s",
-    "database": "metrics",
-    "table": "metrics_gf_test_local"
+    "database": "cudgx",
+    "table": "metrics_test"
   },
   "write_config": {
     "flush_duration": "1s",

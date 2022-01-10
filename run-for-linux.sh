@@ -6,7 +6,7 @@ case $input in
     [yY][eE][sS]|[yY])
 		echo "Installing mysql..."
     # deploy mysql
-    docker run -d --name cudgx_db -e MYSQL_ROOT_PASSWORD=mtQ8chN2 -e MYSQL_DATABASE=bridgx -e MYSQL_USER=gf -e MYSQL_PASSWORD=db@galaxy-future.com -p 3336:3306 -v $(pwd)/init/mysql:/docker-entrypoint-initdb.d yobasystems/alpine-mariadb:10.5.11
+    docker run -d --name cudgx_db -e MYSQL_ROOT_PASSWORD=mtQ8chN2 -e MYSQL_DATABASE=cudgx -e MYSQL_USER=gf -e MYSQL_PASSWORD=db@galaxy-future.com -p 3336:3306 -v $(pwd)/init/mysql:/docker-entrypoint-initdb.d yobasystems/alpine-mariadb:10.5.11
 		;;
 
     [nN][oO]|[nN])
@@ -24,14 +24,10 @@ case $input in
     [yY][eE][sS]|[yY])
 		echo "Installing kafka..."
     # deploy kafka
-    docker run -d -p 2181:2181 --name zookeeper confluentinc/cp-zookeeper:6.2.0
+    docker run -d --name zookeeper --publish 2181:2181 --volume /etc/localtime:/etc/localtime wurstmeister/zookeeper
 
-    docker run  -d --name kafka \
-        -p 9092:9092 \
-        -e KAFKA_BROKER_ID=0 \
-        -e KAFKA_ZOOKEEPER_CONNECT=127.0.0.1:2181 \
-        -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 \
-        -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t confluentinc/cp-kafka:6.2.0
+    docker run -d --name kafka --publish 9092:9092 --link zookeeper --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 --env KAFKA_ADVERTISED_HOST_NAME=127.0.0.1 --env KAFKA_ADVERTISED_PORT=9092 --volume /etc/localtime:/etc/localtime wurstmeister/kafka
+
 		;;
 
     [nN][oO]|[nN])
@@ -49,7 +45,7 @@ case $input in
     [yY][eE][sS]|[yY])
 		echo "Installing clickhouse..."
     # deploy clickhouse
-    docker run -d --name clickhouse --ulimit nofile=262144:262144 yandex/clickhouse-server
+    docker run -d --name clickhouse -p 8123:8123 -p 9000:9000 -p 9009:9009 --ulimit nofile=262144:262144 -v $(pwd)/init/clickhouse/quickstart:/docker-entrypoint-initdb.d yandex/clickhouse-server
     ;;
     [nN][oO]|[nN])
 		echo "Skip clickhouse install, please check conf/api.json clickhouse config."
@@ -59,14 +55,18 @@ case $input in
 		exit 1
 		;;
 esac
-
+# init
+#docker exec kafka \
+#kafka-topics --bootstrap-server broker:9092 \
+#             --create \
+#             --topic monitoring_metrics_test
 # deploy api
-docker run -d --name cudgx_api --network host -v $(pwd)/conf/api.json:/home/tiger/api/conf/api.json galaxyfuture/cudgx-api:"${1:-latest}" bin/wait-for-api.sh
+docker run -d --name cudgx_api --network host -v $(pwd)/conf/api.json:/home/tiger/api/conf/api.json galaxyfuture/cudgx-api:"${1:-latest}"
 # deploy gateway
-docker run -d --name cudgx_gateway --network host -v $(pwd)/conf/gateway.json:/home/tiger/gateway/conf/gateway.json  galaxyfuture/cudgx-gateway:"${1:-latest}" bin/wait-for-scheduler.sh
+docker run -d --name cudgx_gateway --network host -v $(pwd)/conf/gateway.json:/home/tiger/gateway/conf/gateway.json  galaxyfuture/cudgx-gateway:"${1:-latest}"
 # deploy consumer
-docker run -d --name cudgx_consumer --network host -v $(pwd)/conf/consumer.json:/home/tiger/api/conf/consumer.json galaxyfuture/cudgx-consumer:"${1:-latest}" bin/wait-for-api.sh
+docker run -d --name cudgx_consumer --network host -v $(pwd)/conf/consumer.json:/home/tiger/api/conf/consumer.json galaxyfuture/cudgx-consumer:"${1:-latest}"
 # deploy pi
-docker run -d --name cudgx_sample_pi --network host galaxyfuture/cudgx-sample-pi:"${1:-latest}" bin/wait-for-api.sh
+# docker run -d --name cudgx_sample_pi --network host --env CUDGX_SERVICE_NAME=gf.cudgx.sample.pi --env CUDGX_CLUSTER_NAME=default --env CUDGX_GATEWAY_URL=http://127.0.0.1:8080 galaxyfuture/cudgx-sample-pi:"${1:-latest}"
 # deploy benchmark
-docker run -d --name cudgx_sample_benchmark --network host galaxyfuture/cudgx-sample-benchmark:"${1:-latest}" bin/wait-for-api.sh
+# docker run -d --name cudgx_sample_benchmark --network host galaxyfuture/cudgx-sample-benchmark:"${1:-latest}" --gf.cudgx.sample.benchmark.sever-address=http://10.10.10.10/pi

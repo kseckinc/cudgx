@@ -1,8 +1,5 @@
 version: '3'
 
-networks:
-  cudgx_net:
-
 services:
   #######################  mariadb  ########################
   cudgx-mysql:
@@ -21,27 +18,28 @@ services:
     restart: always
   #######################  kafka  ########################
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.2.0
+    image: wurstmeister/zookeeper
     container_name: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    volumes:
+      - /etc/localtime:/etc/localtime
 
-  broker:
-    image: confluentinc/cp-kafka:6.2.0
-    container_name: broker
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    links:
+      - zookeeper
+    volumes:
+      - /etc/localtime:/etc/localtime
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_HOST_NAME=127.0.0.1
+      - KAFKA_ADVERTISED_PORT=9092
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   #######################  clickhouse  ########################
   clickhouse-server:
@@ -55,6 +53,8 @@ services:
       nofile:
         soft: 262144
         hard: 262144
+    volumes:
+      - ./init/clickhouse/quickstart:/docker-entrypoint-initdb.d/
 #  clickhouse-client:
 #    image: yandex/clickhouse-client
 #    command: [ '--host', 'server' ]
@@ -69,7 +69,7 @@ services:
       dockerfile: ./docker/api.Dockerfile
     depends_on:
       - cudgx-mysql
-      - broker
+      - kafka
       - clickhouse-server
 
   gateway:

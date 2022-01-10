@@ -3,27 +3,13 @@
     "default": {
       "brokers": ["127.0.0.1:9092"],
       "topic": "monitoring_metrics_test"
-    },
-    "entries": [
-      {
-        "service_prefix": "gf",
-        "brokers": ["127.0.0.1:9092"],
-        "topic": "monitoring_metrics_gf_test"
-      }
-    ]
+    }
   },
   "streaming_route": {
     "default": {
       "brokers": ["127.0.0.1:9092"],
       "topic": "streaming_metrics_test"
-    },
-    "entries": [
-      {
-        "service_prefix": "gf",
-        "brokers": ["127.0.0.1:9092"],
-        "topic": "streaming_metrics_gf_test"
-      }
-    ]
+    }
   },
 
   "producer": {
@@ -48,7 +34,7 @@
     }
   },
   "database": {
-    "dsn": "root:db@galaxy-future.com@tcp(127.0.0.1:3336)/cudgx?charset=utf8mb4&parseTime=True&loc=Local",
+    "dsn": "gf:db@galaxy-future.com@tcp(127.0.0.1:3336)/cudgx?charset=utf8mb4&parseTime=True&loc=Local",
     "refresh_seconds": 5
   }
 
