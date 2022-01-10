@@ -1,45 +1,41 @@
+IMAGE_VERSION=v0.4
 
+vet:
+	@echo "go vet ."
+	@go vet $$(go list ./...) ; if [ $$? -eq 1 ]; then \
+		echo ""; \
+		echo "Vet found suspicious constructs. Please check the reported constructs"; \
+		echo "and fix them if necessary before submitting the code for review."; \
+		exit 1; \
+	fi
 
-include Makefile.common
+check: vet
 
-.PHONY: all clean test gotest docker docker-gateway docker-api docker-consumer docker-pi docker-benchmark docker-push push-gateway push-consumer push-api push-pi push-benchmark
-
-default: all buildsucc
-
-
-buildsucc:
-	@echo Build Cudgx successfully!
+format:
+	#go get golang.org/x/tools/cmd/goimports
+	find . -name '*.go' | grep -Ev 'vendor|thrift_gen' | xargs goimports -w
 
 all: dev api gateway consumer pi benchmark
 
 dev: check
 	@>&2 echo "Great, all tests passed."
 
-check: fmt vet
-
-fmt:
-	@echo "gofmt (simplify)"
-	@gofmt -s -l -w $(FILES) 2>&1 | $(FAIL_ON_STDOUT)
-
-vet:
-	@echo "vet "
-	@echo  $(PACKAGES_CUDGX_TESTS)
-	$(GO) vet -all $(PACKAGES_CUDGX_TESTS) 2>&1 | $(FAIL_ON_STDOUT)
+check: format vet
 
 gateway:
-	CGO_ENABLED=0 $(GOBUILD) $(RACE_FLAG) -ldflags '$(LDFLAGS) $(CHECK_FLAG)' -o bin/gf.cudgx.gateway ./cmd/gateway/main.go
+	sh ./scripts/build_gateway.sh
 
 consumer:
-	CGO_ENABLED=0 $(GOBUILD) $(RACE_FLAG) -ldflags '$(LDFLAGS) $(CHECK_FLAG)' -o bin/gf.cudgx.consumer ./cmd/consumer/main.go
+	sh ./scripts/build_consumer.sh
 
 api:
-	CGO_ENABLED=0 $(GOBUILD) $(RACE_FLAG) -ldflags '$(LDFLAGS) $(CHECK_FLAG)' -o bin/gf.cudgx.api ./cmd/api/main.go
+	sh ./scripts/build_api.sh
 
 pi:
-	CGO_ENABLED=0 $(GOBUILD) $(RACE_FLAG) -ldflags '$(LDFLAGS) $(CHECK_FLAG)' -o bin/gf.cudgx.sample.pi ./sample/pi/main.go
+	sh ./scripts/build_pi.sh
 
 benchmark:
-	CGO_ENABLED=0 $(GOBUILD) $(RACE_FLAG) -ldflags '$(LDFLAGS) $(CHECK_FLAG)' -o bin/gf.cudgx.sample.benchmark ./sample/benchmark/main.go
+	sh ./scripts/build_benchmark.sh
 
 docker: docker-gateway docker-consumer docker-pi docker-benchmark docker-api buildsucc
 
