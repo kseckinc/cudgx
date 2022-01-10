@@ -18,6 +18,22 @@ CudgX是星汉未来推出的面向云原生时代的AIOps智能运维引擎，�
 6、支持Web服务指标的自动化测量，以及自动扩缩容；<br>
 7、开放的指标定义平台，合作伙伴可以基于开放平台进行个性化指标配置；<br>
 
+系统架构
+--------
+
+* 系统架构图
+
+  ![cudgx_arch](./images/cudgx_arch.png)
+
+* 系统模块说明
+  * cudgx-api：
+    * predict-rules： 负责维护扩缩容规则信息。
+    * redundancy-keeper： 负责服务集群冗余度保持。
+  * cudgx-gateway： 负责收集`metrics-go`上报的打点数据，并将数据分发到Kafka。
+  * cudgx-consumer： 负责消费kafka数据，存储至clickhouse。
+  * metrics-go： cudgx打点SDK。
+  
+
 安装部署
 --------
 
