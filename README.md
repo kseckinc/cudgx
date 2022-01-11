@@ -32,6 +32,15 @@ CudgX是星汉未来推出的面向云原生时代的AIOps智能运维引擎，�
   * cudgx-gateway： 负责收集`metrics-go`上报的打点数据，并将数据分发到Kafka。
   * cudgx-consumer： 负责消费kafka数据，存储至clickhouse。
   * metrics-go： cudgx打点SDK。
+
+系统图例
+--------
+- 查看服务监控相关图例： `冗余度走势` `QPS` `机器数` 图。
+- 查看服务扩缩记录。
+- 示例：
+![sample_1](./images/sample_1.png)
+
+    ![sample_2](./images/sample_2.png)
   
 
 安装部署
@@ -115,9 +124,7 @@ CudgX是星汉未来推出的面向云原生时代的AIOps智能运维引擎，�
 
     - 5）ComandX页面-服务列表-集群监控
       - 查看服务监控相关图例： `冗余度走势` `QPS` `机器数` 图。
-      - 查看服务扩缩记录。
-      - 示例：
-        ![sample](./images/sample.png)        
+      - 查看服务扩缩记录。     
 
 
 联系我们
