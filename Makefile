@@ -32,10 +32,10 @@ api:
 	sh ./scripts/build_api.sh
 
 pi:
-	sh ./scripts/build_pi.sh
+	sh ./scripts/build_sample_pi.sh
 
 benchmark:
-	sh ./scripts/build_benchmark.sh
+	sh ./scripts/build_sample_benchmark.sh
 
 docker: docker-gateway docker-consumer docker-pi docker-benchmark docker-api buildsucc
 

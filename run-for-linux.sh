@@ -10,7 +10,7 @@ case $input in
 		;;
 
     [nN][oO]|[nN])
-		echo "Skip mysql install, please check conf/config.yml mysql config, and import init/mysql/* to existing mysql for first install."
+		echo "Skip mysql install, please check conf/*.json mysql config, and import init/mysql/* to existing mysql for first install."
     ;;
     *)
 		echo "Invalid input..."
@@ -31,7 +31,7 @@ case $input in
 		;;
 
     [nN][oO]|[nN])
-		echo "Skip kafka install, please check conf/api.json kafka config."
+		echo "Skip kafka install, please check conf/*.json kafka config."
     ;;
     *)
 		echo "Invalid input..."
@@ -48,7 +48,7 @@ case $input in
     docker run -d --name clickhouse -p 8123:8123 -p 9000:9000 -p 9009:9009 --ulimit nofile=262144:262144 -v $(pwd)/init/clickhouse/quickstart:/docker-entrypoint-initdb.d yandex/clickhouse-server
     ;;
     [nN][oO]|[nN])
-		echo "Skip clickhouse install, please check conf/api.json clickhouse config."
+		echo "Skip clickhouse install, please check conf/*.json clickhouse config."
     ;;
     *)
 		echo "Invalid input..."
