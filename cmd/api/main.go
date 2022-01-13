@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"flag"
+	"net"
+
 	"github.com/galaxy-future/cudgx/cmd/api/handler"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/internal/predict"
 	"github.com/galaxy-future/cudgx/internal/predict/config"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"net"
 )
 
 var (

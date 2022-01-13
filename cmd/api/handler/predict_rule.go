@@ -1,14 +1,15 @@
 package handler
 
 import (
+	"net/http"
+	"strconv"
+	"strings"
+
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"github.com/galaxy-future/cudgx/internal/predict/service"
 	"github.com/galaxy-future/cudgx/internal/request"
 	"github.com/galaxy-future/cudgx/internal/response"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"strconv"
-	"strings"
 )
 
 // GetPredictRule 获取扩缩容规则

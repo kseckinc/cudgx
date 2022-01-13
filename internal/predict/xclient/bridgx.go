@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
 )
 
 func NewBridgxClient(serverAddress string) *Client {

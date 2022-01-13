@@ -2,12 +2,13 @@ package main
 
 import (
 	"flag"
+	"net"
+
 	"github.com/galaxy-future/cudgx/cmd/gateway/handler"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/internal/gateway"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"net"
 )
 
 var (

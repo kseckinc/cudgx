@@ -3,9 +3,10 @@ package rule
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/galaxy-future/cudgx/common/mod"
 	wrapmod "github.com/galaxy-future/cudgx/internal/gateway/mod"
-	"strings"
 )
 
 func (manager *Manager) WrapStreamingMessage(streamingBatch *mod.StreamingBatch) (batch *wrapmod.StreamingRuleBatch, err error) {

@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"github.com/galaxy-future/cudgx/common/logger"
-	"go.uber.org/zap"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/galaxy-future/cudgx/common/logger"
+	"go.uber.org/zap"
 )
 
 func TryGetStringEnvironment(name, defaultValue string) string {

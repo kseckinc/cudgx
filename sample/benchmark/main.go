@@ -4,8 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/galaxy-future/cudgx/common/logger"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"math"
 	"net/http"
@@ -14,6 +12,9 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/galaxy-future/cudgx/common/logger"
+	"go.uber.org/zap"
 )
 
 var piServer = flag.String("gf.cudgx.sample.benchmark.sever-address", "http://localhost:8090/pi", "server bind address default(http://localhost:8090)")

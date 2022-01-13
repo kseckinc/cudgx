@@ -1,11 +1,12 @@
 package handler
 
 import (
+	"io/ioutil"
+
 	"github.com/galaxy-future/cudgx/common/mod"
 	"github.com/galaxy-future/cudgx/internal/gateway"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/protobuf/proto"
-	"io/ioutil"
 )
 
 // HandlerMonitoringMessageBatch monitoring指标数据处理

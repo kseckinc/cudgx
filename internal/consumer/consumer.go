@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"sync"
+
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/logger"
@@ -11,7 +13,6 @@ import (
 	"github.com/golang/protobuf/proto"
 	clickhouseGo "github.com/mailru/go-clickhouse"
 	"go.uber.org/zap"
-	"sync"
 )
 
 type Consumer struct {

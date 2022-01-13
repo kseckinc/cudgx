@@ -3,6 +3,7 @@ package clients
 import (
 	"database/sql"
 	"fmt"
+
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 )
 

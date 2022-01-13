@@ -3,11 +3,12 @@ package clickhouse
 import (
 	"database/sql"
 	"fmt"
+	"sync"
+	"time"
+
 	"github.com/galaxy-future/cudgx/common/logger"
 	_ "github.com/mailru/go-clickhouse"
 	"go.uber.org/zap"
-	"sync"
-	"time"
 )
 
 type CommitFunc func(connection *sql.DB, messages []interface{}) error

@@ -1,6 +1,8 @@
 package service
 
 import (
+	"sort"
+
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	"github.com/galaxy-future/cudgx/internal/predict/query"
 )
@@ -26,12 +28,12 @@ type ClusterRedundancySeries struct {
 }
 
 //QueryRedundancyByQPS 基于QPS查询系统冗余度
-func QueryRedundancyByQPS(serviceName, clusterName string, benchmark float64, begin, end int64) (*RedundancySeries, error) {
+func QueryRedundancyByQPS(serviceName, clusterName string, benchmark float64, begin, end int64, trimmedSecond int64) (*RedundancySeries, error) {
 	samples, err := query.AverageQPS(serviceName, clusterName, begin, end)
 	if err != nil {
 		return nil, err
 	}
-	clusters := samples2ClusterSeries(samples)
+	clusters := samples2ClusterSeries(samples, trimmedSecond)
 	for _, cluster := range clusters {
 		for i := range cluster.Values {
 			cluster.Values[i] = benchmark / cluster.Values[i]
@@ -49,13 +51,13 @@ func QueryRedundancyByQPS(serviceName, clusterName string, benchmark float64, be
 }
 
 //QueryServiceTotalQPS 基于QPS查询系统冗余度
-func QueryServiceTotalQPS(serviceName, clusterName string, begin, end int64) (*RedundancySeries, error) {
+func QueryServiceTotalQPS(serviceName, clusterName string, begin, end int64, trimmedSecond int64) (*RedundancySeries, error) {
 	samples, err := query.TotalQPS(serviceName, clusterName, begin, end)
 	if err != nil {
 		return nil, err
 	}
 
-	clusters := samples2ClusterSeries(samples)
+	clusters := samples2ClusterSeries(samples, trimmedSecond)
 
 	series := &RedundancySeries{
 		ServiceName: serviceName,
@@ -68,7 +70,7 @@ func QueryServiceTotalQPS(serviceName, clusterName string, begin, end int64) (*R
 	return series, nil
 }
 
-func samples2ClusterSeries(samples []query.ClusterSample) []*ClusterRedundancySeries {
+func samples2ClusterSeries(samples []query.ClusterSample, trimmedSecond int64) []*ClusterRedundancySeries {
 	clustersNameMap := make(map[string]*ClusterRedundancySeries)
 	for _, sample := range samples {
 		cluster := clustersNameMap[sample.ClusterName]
@@ -86,5 +88,36 @@ func samples2ClusterSeries(samples []query.ClusterSample) []*ClusterRedundancySe
 	for _, cluster := range clustersNameMap {
 		clusters = append(clusters, cluster)
 	}
+
+	//如果需要对时间取整，则进行处理
+	if trimmedSecond != 1 {
+		for _, cluster := range clusters {
+			trimmedSeries := make(map[int64]float64)
+			for i := range cluster.Values {
+				trimmedTimestamp := cluster.Timestamps[i] / trimmedSecond * trimmedSecond
+				value, exists := trimmedSeries[trimmedTimestamp]
+				if !exists {
+					trimmedSeries[trimmedTimestamp] = cluster.Values[i]
+					continue
+				}
+				if cluster.Values[i] > value {
+					trimmedSeries[trimmedTimestamp] = cluster.Values[i]
+				}
+			}
+			var values []float64
+			var timestamps []int64
+			for timestamp, _ := range trimmedSeries {
+				timestamps = append(timestamps, timestamp)
+			}
+			sort.Slice(timestamps, func(i, j int) bool { return timestamps[i] < timestamps[j] })
+			for _, timestamp := range timestamps {
+				values = append(values, trimmedSeries[timestamp])
+			}
+			cluster.Timestamps = timestamps
+			cluster.Values = values
+		}
+
+	}
+
 	return clusters
 }

@@ -2,13 +2,14 @@ package predict
 
 import (
 	"context"
+	"time"
+
 	"github.com/galaxy-future/cudgx/common/types"
 	"github.com/galaxy-future/cudgx/internal/clients"
 	"github.com/galaxy-future/cudgx/internal/predict/config"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
 	redundancy_keeper "github.com/galaxy-future/cudgx/internal/predict/redundancy-keeper"
 	"github.com/galaxy-future/cudgx/internal/predict/xclient"
-	"time"
 )
 
 var predictor *Predictor
@@ -27,7 +28,7 @@ func InitializeByConfig(theConfig *config.Config) error {
 		theConfig.Predict.MinimalSampleCount = consts.DefaultPredictMinCount
 	}
 	if theConfig.Predict.RunDuration.Duration == 0 {
-		theConfig.Predict.RunDuration = types.Duration{Duration: 10 * time.Second}
+		theConfig.Predict.RunDuration = types.Duration{Duration: 60 * time.Second}
 	}
 	if theConfig.Predict.RuleConcurrency == 0 {
 		theConfig.Predict.RuleConcurrency = consts.DefaultRuleConcurrency

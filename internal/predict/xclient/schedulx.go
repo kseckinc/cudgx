@@ -3,12 +3,13 @@ package xclient
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/cudgx/common/logger"
-	"github.com/galaxy-future/cudgx/internal/predict/consts"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/galaxy-future/cudgx/common/logger"
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
+	"go.uber.org/zap"
 )
 
 func NewSchedulxClient(serverAddress string) *Client {

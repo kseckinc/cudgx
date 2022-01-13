@@ -2,10 +2,11 @@ package rule_test
 
 import (
 	"fmt"
-	"github.com/galaxy-future/cudgx/internal/gateway/rule"
 	"os"
 	"os/exec"
 	"testing"
+
+	"github.com/galaxy-future/cudgx/internal/gateway/rule"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

@@ -2,13 +2,14 @@ package gateway_test
 
 import (
 	"fmt"
+	"reflect"
+	"time"
+
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/types"
 	"github.com/galaxy-future/cudgx/internal/gateway"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
-	"reflect"
-	"time"
 )
 
 var _ = ginkgo.Describe("Config", func() {

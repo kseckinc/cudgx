@@ -1,10 +1,11 @@
 package service
 
 import (
-	"github.com/galaxy-future/cudgx/internal/predict/model"
-	"github.com/galaxy-future/cudgx/internal/request"
 	"strings"
 	"time"
+
+	"github.com/galaxy-future/cudgx/internal/predict/model"
+	"github.com/galaxy-future/cudgx/internal/request"
 )
 
 func CreatePredictRule(req *request.CreatePredictRuleRequest) error {

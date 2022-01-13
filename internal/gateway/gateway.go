@@ -2,10 +2,11 @@ package gateway
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/galaxy-future/cudgx/common/kafka"
 	"github.com/galaxy-future/cudgx/common/mod"
 	wrapmod "github.com/galaxy-future/cudgx/internal/gateway/mod"
-	"strings"
 )
 
 type KafkaClient struct {

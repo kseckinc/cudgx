@@ -1,12 +1,13 @@
 package rule
 
 import (
+	"strings"
+	"time"
+
 	"github.com/galaxy-future/cudgx/common/logger"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"strings"
-	"time"
 )
 
 type Manager struct {

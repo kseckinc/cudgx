@@ -3,14 +3,15 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/galaxy-future/cudgx/common/logger"
-	"github.com/galaxy-future/cudgx/internal/consumer"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
+
+	"github.com/galaxy-future/cudgx/common/logger"
+	"github.com/galaxy-future/cudgx/internal/consumer"
+	"go.uber.org/zap"
 )
 
 var (

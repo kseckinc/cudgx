@@ -3,6 +3,10 @@ package redundancy_keeper
 import (
 	"context"
 	"fmt"
+	"math"
+	"sort"
+	"time"
+
 	"github.com/galaxy-future/cudgx/common/logger"
 	"github.com/galaxy-future/cudgx/internal/predict/config"
 	"github.com/galaxy-future/cudgx/internal/predict/consts"
@@ -10,9 +14,6 @@ import (
 	"github.com/galaxy-future/cudgx/internal/predict/service"
 	"github.com/galaxy-future/cudgx/internal/predict/xclient"
 	"go.uber.org/zap"
-	"math"
-	"sort"
-	"time"
 )
 
 var (
@@ -88,7 +89,7 @@ func scheduleRule(rule *model.PredictRule) error {
 	clusterName := rule.ClusterName
 	benchmark := rule.BenchmarkQps
 
-	series, err := service.QueryRedundancyByQPS(serviceName, clusterName, float64(benchmark), time.Now().Add(-1*lookbackDuration).Unix(), time.Now().Add(-1*metricsSendDuration).Unix())
+	series, err := service.QueryRedundancyByQPS(serviceName, clusterName, float64(benchmark), time.Now().Add(-1*lookbackDuration).Unix(), time.Now().Add(-1*metricsSendDuration).Unix(), consts.DefaultTrimmedSecond)
 	if err != nil {
 		return err
 	}

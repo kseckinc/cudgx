@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"encoding/json"
+
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"github.com/galaxy-future/cudgx/common/kafka"
 )

@@ -2,13 +2,14 @@ package query_test
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"testing"
+
 	"github.com/galaxy-future/cudgx/common/clickhouse"
 	"github.com/galaxy-future/cudgx/internal/clients"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"os"
-	"os/exec"
-	"testing"
 )
 
 func TestQuery(t *testing.T) {

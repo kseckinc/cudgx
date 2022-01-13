@@ -1,9 +1,9 @@
 package xclient_test
 
 import (
-	"github.com/galaxy-future/cudgx/internal/predict/xclient"
 	"testing"
 
+	"github.com/galaxy-future/cudgx/internal/predict/xclient"
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 )

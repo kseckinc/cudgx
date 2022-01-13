@@ -3,10 +3,11 @@ package kafka
 import (
 	"context"
 	"fmt"
+	"log"
+
 	"github.com/Shopify/sarama"
 	"github.com/galaxy-future/cudgx/common/logger"
 	"go.uber.org/zap"
-	"log"
 )
 
 func NewConsumers(ch chan interface{}, brokers []string, topic, group string, kafkaConfig *ConsumerConfig) (*ConsumerClient, error) {

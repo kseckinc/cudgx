@@ -3,10 +3,11 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/galaxy-future/cudgx/common/clickhouse"
-	"github.com/galaxy-future/cudgx/common/types"
 	"io/ioutil"
 	"os"
+
+	"github.com/galaxy-future/cudgx/common/clickhouse"
+	"github.com/galaxy-future/cudgx/common/types"
 )
 
 //Config 预测器配置

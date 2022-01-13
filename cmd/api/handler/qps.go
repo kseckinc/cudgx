@@ -2,12 +2,14 @@ package handler
 
 import (
 	"fmt"
+	"github.com/galaxy-future/cudgx/internal/predict/consts"
+	"net/http"
+	"time"
+
 	"github.com/galaxy-future/cudgx/internal/predict/service"
 	"github.com/galaxy-future/cudgx/internal/response"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
-	"net/http"
-	"time"
 )
 
 // QueryRedundancyByQPS 基于QPS指标数据输出冗余度
@@ -28,7 +30,7 @@ func QueryRedundancyByQPS(c *gin.Context) {
 		return
 	}
 
-	redundancySeries, err := service.QueryRedundancyByQPS(serviceName, clusterName, float64(benchmark), begin, end)
+	redundancySeries, err := service.QueryRedundancyByQPS(serviceName, clusterName, float64(benchmark), begin, end, consts.TrimmedSecond)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.MkFailedResponse(err.Error()))
 		return
@@ -43,7 +45,7 @@ func QueryTotalQPS(c *gin.Context) {
 	if !pass {
 		return
 	}
-	redundancySeries, err := service.QueryServiceTotalQPS(serviceName, clusterName, begin, end)
+	redundancySeries, err := service.QueryServiceTotalQPS(serviceName, clusterName, begin, end, consts.TrimmedSecond)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.MkFailedResponse(err.Error()))
 		return
@@ -58,7 +60,7 @@ func QueryInstanceCountByQPSMetrics(c *gin.Context) {
 	if !pass {
 		return
 	}
-	redundancySeries, err := service.QueryInstances(serviceName, clusterName, begin, end)
+	redundancySeries, err := service.QueryInstances(serviceName, clusterName, begin, end, consts.TrimmedSecond)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, response.MkFailedResponse(err.Error()))
 		return
