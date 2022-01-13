@@ -38,7 +38,6 @@ CudgX是星汉未来推出的面向云原生时代的AIOps智能运维引擎，�
 - 查看服务监控相关图例： `冗余度走势` `QPS` `机器数` 图。
 - 查看服务扩缩记录。
 - 示例：
-![sample_1](./images/sample_1.png)
 
     ![sample_3](./images/sample_3.png)
   
